@@ -1,0 +1,2246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>咕咕礼物电报局 - 传递心动的频率</title>
+    <link href="https://fonts.googleapis.cn/css2?family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #FDF8E8;
+            --bg-cream-light: #FEFBEA;
+            --bg-card: #FBF7E8;
+            --blue-deep: #2C3E50;
+            --blue-mist: #5D7A8C;
+            --blue-fog: #8BA4B4;
+            --sage: #9CAF88;
+            --sage-light: #B8C9A8;
+            --oat: #E8E0D5;
+            --apricot: #F5D6C6;
+            --text-dark: #2C3E50;
+            --text-muted: #6B7D8A;
+            --border-light: rgba(44, 62, 80, 0.12);
+            --shadow-soft: 0 2px 12px rgba(44, 62, 80, 0.08);
+            --shadow-hover: 0 8px 24px rgba(44, 62, 80, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.7;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, var(--bg-cream-light) 0%, var(--bg-cream) 100%);
+            padding: 1.5rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            fill: var(--blue-deep);
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--blue-deep);
+            letter-spacing: 0.05em;
+        }
+
+        /* Mode Toggle */
+        .mode-toggle {
+            display: flex;
+            background: var(--bg-card);
+            border-radius: 2rem;
+            padding: 4px;
+            border: 1px solid var(--border-light);
+        }
+
+        .mode-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn.active {
+            background: var(--blue-deep);
+            color: var(--bg-cream-light);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+            padding-bottom: 6rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: var(--blue-deep);
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Inspiration Button */
+        .inspiration-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--blue-deep);
+            color: var(--bg-cream-light);
+            border: none;
+            border-radius: 2rem;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .inspiration-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .inspiration-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Categories Navigation */
+        .categories-nav {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .categories-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-tag {
+            flex-shrink: 0;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 1.5rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .category-tag:hover {
+            border-color: var(--blue-mist);
+            color: var(--blue-deep);
+        }
+
+        .category-tag.active {
+            background: var(--blue-deep);
+            color: var(--bg-cream-light);
+            border-color: var(--blue-deep);
+        }
+
+        /* Filter Button */
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 1.5rem;
+            font-family: inherit;
+            font-size: 0.875rem;
+            color: var(--blue-deep);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--blue-mist);
+        }
+
+        .filter-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.25rem;
+            background: var(--bg-card);
+            padding: 4px;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-light);
+        }
+
+        .view-btn {
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn.active {
+            background: var(--blue-deep);
+        }
+
+        .view-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-muted);
+        }
+
+        .view-btn.active svg {
+            stroke: var(--bg-cream-light);
+        }
+
+        /* Gift Grid */
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .gift-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        /* Gift Card */
+        .gift-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--blue-fog);
+        }
+
+        .gift-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .gift-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--blue-deep);
+            flex: 1;
+            padding-right: 0.5rem;
+        }
+
+        .favorite-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: 1px solid var(--border-light);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .favorite-btn:hover {
+            background: var(--oat);
+        }
+
+        .favorite-btn.active {
+            background: var(--sage);
+            border-color: var(--sage);
+        }
+
+        .favorite-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn.active svg {
+            stroke: white;
+        }
+
+        .gift-match {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            font-style: italic;
+        }
+
+        .gift-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.375rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .gift-tag {
+            padding: 0.25rem 0.625rem;
+            background: var(--oat);
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .gift-tag.price {
+            background: var(--sage-light);
+            color: var(--text-dark);
+        }
+
+        .gift-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Filter Panel */
+        .filter-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--bg-cream);
+            z-index: 200;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-panel.active {
+            right: 0;
+        }
+
+        .filter-panel-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-cream);
+            z-index: 10;
+        }
+
+        .filter-panel-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--blue-deep);
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-muted);
+        }
+
+        .filter-panel-content {
+            padding: 1.25rem;
+        }
+
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--blue-deep);
+            margin-bottom: 0.75rem;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-option {
+            padding: 0.5rem 0.875rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 1.5rem;
+            font-family: inherit;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-option:hover {
+            border-color: var(--blue-mist);
+        }
+
+        .filter-option.active {
+            background: var(--blue-deep);
+            color: var(--bg-cream-light);
+            border-color: var(--blue-deep);
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7D8A' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--blue-mist);
+        }
+
+        .filter-result {
+            padding: 1rem;
+            background: var(--oat);
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .filter-result-count {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--blue-deep);
+        }
+
+        .filter-result-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .filter-action-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-action-btn.primary {
+            background: var(--blue-deep);
+            color: var(--bg-cream-light);
+            border: none;
+        }
+
+        .filter-action-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+        }
+
+        /* Quiz Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.5);
+            z-index: 300;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-cream);
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--blue-deep);
+        }
+
+        .modal-content {
+            padding: 1.5rem;
+        }
+
+        .quiz-progress {
+            display: flex;
+            gap: 0.375rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-progress-dot {
+            flex: 1;
+            height: 4px;
+            background: var(--border-light);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-progress-dot.active {
+            background: var(--blue-deep);
+        }
+
+        .quiz-progress-dot.completed {
+            background: var(--sage);
+        }
+
+        .quiz-question {
+            font-size: 1rem;
+            color: var(--blue-deep);
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .quiz-option {
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 0.75rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--blue-mist);
+            background: var(--oat);
+        }
+
+        .quiz-option.active {
+            border-color: var(--blue-deep);
+            background: var(--blue-mist);
+            color: white;
+        }
+
+        /* Result Card */
+        .result-card {
+            background: var(--bg-card);
+            border: 2px solid var(--blue-deep);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .result-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            fill: var(--blue-deep);
+        }
+
+        .result-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--blue-deep);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-reason {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .result-message {
+            background: var(--oat);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .result-btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 1.5rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .result-btn.primary {
+            background: var(--blue-deep);
+            color: var(--bg-cream-light);
+            border: none;
+        }
+
+        .result-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+        }
+
+        /* Collection Panel */
+        .collection-panel {
+            position: fixed;
+            top: 0;
+            left: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--bg-cream);
+            z-index: 200;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .collection-panel.active {
+            left: 0;
+        }
+
+        .collection-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-cream);
+            z-index: 10;
+        }
+
+        .collection-list {
+            padding: 1rem;
+        }
+
+        .collection-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+            cursor: grab;
+        }
+
+        .collection-item:active {
+            cursor: grabbing;
+        }
+
+        .collection-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .collection-item-name {
+            font-weight: 500;
+            color: var(--blue-deep);
+        }
+
+        .collection-item-status {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 1rem;
+            background: var(--sage-light);
+            color: var(--text-dark);
+        }
+
+        .collection-item-note {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: var(--oat);
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .collection-actions {
+            padding: 1rem;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .collection-action-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .collection-action-btn.primary {
+            background: var(--blue-deep);
+            color: var(--bg-cream-light);
+            border: none;
+        }
+
+        .collection-action-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+        }
+
+        .collection-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+        }
+
+        .collection-empty svg {
+            width: 64px;
+            height: 64px;
+            stroke: var(--border-light);
+            margin-bottom: 1rem;
+        }
+
+        /* Gift Detail Modal */
+        .gift-detail-content {
+            padding: 1.5rem;
+        }
+
+        .gift-detail-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--blue-deep);
+            margin-bottom: 0.75rem;
+        }
+
+        .gift-detail-match {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .gift-detail-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .gift-detail-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .gift-detail-text {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .similar-gifts {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .similar-gifts-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--blue-deep);
+            margin-bottom: 0.75rem;
+        }
+
+        .similar-gifts-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .similar-gift-tag {
+            padding: 0.5rem 0.875rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .similar-gift-tag:hover {
+            border-color: var(--blue-mist);
+            color: var(--blue-deep);
+        }
+
+        /* Pigeon Easter Egg */
+        .pigeon-btn {
+            position: fixed;
+            bottom: 5rem;
+            right: 1.5rem;
+            width: 48px;
+            height: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 50;
+        }
+
+        .pigeon-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--blue-mist);
+        }
+
+        .pigeon-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--blue-deep);
+        }
+
+        /* Telegram Overlay */
+        .telegram-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-cream);
+            z-index: 500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 2rem;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .telegram-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .telegram-message {
+            font-size: 1.25rem;
+            color: var(--blue-deep);
+            margin-bottom: 1rem;
+        }
+
+        .telegram-gift {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--blue-deep);
+            margin-bottom: 0.5rem;
+        }
+
+        .telegram-note {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-easter-egg {
+            font-size: 0.75rem;
+            color: var(--oat);
+            margin-top: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-easter-egg:hover {
+            color: var(--text-muted);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-cream-light);
+            border-top: 1px solid var(--border-light);
+            display: none;
+            justify-content: space-around;
+            padding: 0.75rem 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 0.7rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item.active {
+            color: var(--blue-deep);
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+        }
+
+        /* Note Input */
+        .note-input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .note-input:focus {
+            outline: none;
+            border-color: var(--blue-mist);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .bottom-nav {
+                display: flex;
+            }
+
+            .main-container {
+                padding-bottom: 5rem;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .gift-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-panel,
+            .collection-panel {
+                max-width: 100%;
+            }
+
+            .pigeon-btn {
+                bottom: 5.5rem;
+            }
+        }
+
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, var(--oat) 25%, var(--bg-card) 50%, var(--oat) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 0.5rem;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .skeleton-card {
+            height: 180px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--blue-deep);
+            color: var(--bg-cream-light);
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            z-index: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.active {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Overlay for panels */
+        .panel-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.3);
+            z-index: 150;
+            display: none;
+        }
+
+        .panel-overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                <span class="logo-text">咕咕礼物电报局</span>
+            </div>
+            <div class="mode-toggle">
+                <button class="mode-btn active" data-mode="giver">帮TA挑</button>
+                <button class="mode-btn" data-mode="receiver">我想要的</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title" id="heroTitle">我好像偷听到了TA没说出口的期待</h1>
+            <p class="hero-subtitle" id="heroSubtitle">每一次灵感发电，都是一场心意的解码。让我帮你截获那个刚刚好的礼物。</p>
+            <button class="inspiration-btn" id="inspirationBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+                <span id="inspirationBtnText">📡 为TA截获一个礼物灵感</span>
+            </button>
+        </section>
+
+        <!-- Categories -->
+        <nav class="categories-nav" id="categoriesNav"></nav>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <button class="filter-btn" id="filterBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>
+                </svg>
+                <span>智能筛选</span>
+            </button>
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                    </svg>
+                </button>
+                <button class="view-btn" data-view="list">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="8" y1="6" x2="21" y2="6"/>
+                        <line x1="8" y1="12" x2="21" y2="12"/>
+                        <line x1="8" y1="18" x2="21" y2="18"/>
+                        <line x1="3" y1="6" x2="3.01" y2="6"/>
+                        <line x1="3" y1="12" x2="3.01" y2="12"/>
+                        <line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Gift Grid -->
+        <div class="gift-grid" id="giftGrid"></div>
+    </main>
+
+    <!-- Filter Panel -->
+    <div class="panel-overlay" id="panelOverlay"></div>
+    <aside class="filter-panel" id="filterPanel">
+        <div class="filter-panel-header">
+            <h2 class="filter-panel-title" id="filterPanelTitle">为TA找到对的礼物</h2>
+            <button class="close-btn" id="closeFilter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="filter-panel-content">
+            <div class="filter-group">
+                <label class="filter-label" id="filterLabel1">TA的日常状态</label>
+                <div class="filter-options" id="filterOptions1"></div>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">关系阶段</label>
+                <div class="filter-options" id="filterOptions2"></div>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label" id="filterLabel3">想传递的信号</label>
+                <div class="filter-options" id="filterOptions3"></div>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label" id="filterLabel4">最近的心头好</label>
+                <div class="filter-options" id="filterOptions4"></div>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">准备时间</label>
+                <div class="filter-options" id="filterOptions5"></div>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">专属程度</label>
+                <div class="filter-options" id="filterOptions6"></div>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label" id="filterLabel7">TA的性格标签（可多选）</label>
+                <div class="filter-options" id="filterOptions7"></div>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">预算舒适区</label>
+                <div class="filter-options" id="filterOptions8"></div>
+            </div>
+            <div class="filter-result">
+                <div class="filter-result-count" id="filterResultCount">0</div>
+                <div class="filter-result-text">个礼物匹配</div>
+            </div>
+            <div class="filter-actions">
+                <button class="filter-action-btn secondary" id="resetFilter">重置</button>
+                <button class="filter-action-btn primary" id="applyFilter">应用筛选</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Collection Panel -->
+    <aside class="collection-panel" id="collectionPanel">
+        <div class="collection-header">
+            <h2 class="filter-panel-title">电报存档</h2>
+            <button class="close-btn" id="closeCollection">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="collection-list" id="collectionList"></div>
+        <div class="collection-actions">
+            <button class="collection-action-btn secondary" id="clearCollection">清空</button>
+            <button class="collection-action-btn primary" id="exportCollection">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                导出清单
+            </button>
+        </div>
+    </aside>
+
+    <!-- Quiz Modal -->
+    <div class="modal-overlay" id="quizModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="quizTitle">灵感发电中...</h3>
+                <button class="close-btn" id="closeQuiz">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="quiz-progress" id="quizProgress"></div>
+                <p class="quiz-question" id="quizQuestion"></p>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="result-card" id="resultCard" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gift Detail Modal -->
+    <div class="modal-overlay" id="giftDetailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">礼物详情</h3>
+                <button class="close-btn" id="closeGiftDetail">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="gift-detail-content" id="giftDetailContent"></div>
+        </div>
+    </div>
+
+    <!-- Pigeon Button -->
+    <button class="pigeon-btn" id="pigeonBtn" title="随机窃听">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.8-.1 2.6-.3L19 22v-4.4c1.8-1.6 3-3.9 3-6.6 0-5.5-4.5-10-10-10zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/>
+        </svg>
+    </button>
+
+    <!-- Telegram Overlay -->
+    <div class="telegram-overlay" id="telegramOverlay">
+        <p class="telegram-message">📡 截获一条电报...</p>
+        <p class="telegram-gift" id="telegramGift"></p>
+        <p class="telegram-note" id="telegramNote"></p>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>咕咕电报局，传递没说出口的喜欢。</p>
+        <p class="footer-easter-egg">深蓝爱淡黄，咕咕电报局永远在线。——致我最好的灵感接收者</p>
+    </footer>
+
+    <!-- Bottom Navigation (Mobile) -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-nav="home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span>首页</span>
+        </button>
+        <button class="nav-item" data-nav="filter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+            </svg>
+            <span>筛选</span>
+        </button>
+        <button class="nav-item" data-nav="collection">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+            </svg>
+            <span>存档</span>
+        </button>
+    </nav>
+
+    <script>
+        // ==================== Gift Data (99+ gifts) ====================
+        const giftData = [
+            // 上头体验
+            { id: 1, name: "星空投影灯", category: "上头体验", match: "适合喜欢在深夜发呆的人", tags: ["氛围", "浪漫", "居家"], desc: "把银河搬进卧室，躺在床上数星星数到睡着", priceRange: "¥50-150", signals: ["治愈我", "陪着我"], traits: ["细腻敏感", "浪漫主义"] },
+            { id: 2, name: "密室逃脱双人票", category: "上头体验", match: "适合喜欢刺激但不爱运动的人", tags: ["互动", "刺激", "约会"], desc: "一起被困在房间里，智商和默契的双重考验", priceRange: "¥150-300", signals: ["点燃我", "让我笑"], traits: ["好奇心重", "社牛"] },
+            { id: 3, name: "陶艺体验课", category: "上头体验", match: "适合说想做手工但从未动手的人", tags: ["手工", "创意", "约会"], desc: "一起玩泥巴，做出这辈子最丑也最有意义的杯子", priceRange: "¥100-200", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["好奇心重", "细腻敏感"] },
+            { id: 4, name: "温泉酒店一晚", category: "上头体验", match: "适合最近喊了三次以上'好累'的人", tags: ["放松", "旅行", "治愈"], desc: "泡着温泉看星星，把烦恼蒸成水汽", priceRange: "¥300-500", signals: ["治愈我", "陪着我"], traits: ["细腻敏感", "念旧"] },
+            { id: 5, name: "VR游戏体验券", category: "上头体验", match: "适合游戏宅但还没玩过VR的人", tags: ["科技", "游戏", "刺激"], desc: "在虚拟世界里拯救世界，现实中手舞足蹈", priceRange: "¥100-200", signals: ["点燃我", "让我笑"], traits: ["好奇心重", "社恐"] },
+            { id: 6, name: "脱口秀双人票", category: "上头体验", match: "适合笑点低又爱吐槽的人", tags: ["娱乐", "约会", "搞笑"], desc: "一起笑出腹肌，顺便吐槽一下生活的荒谬", priceRange: "¥150-300", signals: ["让我笑", "治愈我"], traits: ["社牛", "大大咧咧"] },
+            { id: 7, name: "游乐园年卡", category: "上头体验", match: "适合说想去但总找不到时间的人", tags: ["娱乐", "约会", "长期"], desc: "把快乐变成定期事项，随时随地找回童心", priceRange: "¥200-400", signals: ["点燃我", "陪着我"], traits: ["好奇心重", "大大咧咧"] },
+            { id: 8, name: "私人影院包厢", category: "上头体验", match: "适合想看电影又怕打扰别人的人", tags: ["影视", "约会", "私密"], desc: "两个人一部电影一桶爆米花，专属的影院时光", priceRange: "¥100-200", signals: ["陪着我", "懂我奇奇怪怪"], traits: ["社恐", "浪漫主义"] },
+            
+            // 居家废柴乐
+            { id: 9, name: "懒人沙发", category: "居家废柴乐", match: "适合周末不想出门星人", tags: ["舒适", "居家", "实用"], desc: "一个可以坐可以躺可以发呆的魔法椅子", priceRange: "¥150-300", signals: ["治愈我", "陪着我"], traits: ["宅", "细腻敏感"] },
+            { id: 10, name: "电动按摩枕", category: "居家废虫乐", match: "适合脖子永远酸痛的人", tags: ["实用", "放松", "健康"], desc: "解放你的颈椎，躺平也能被照顾", priceRange: "¥100-200", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["细腻敏感", "实用主义"] },
+            { id: 11, name: "超软毛绒毯", category: "居家废虫乐", match: "适合怕冷又怕麻烦的人", tags: ["温暖", "舒适", "实用"], desc: "裹起来就是一座温暖的堡垒", priceRange: "¥50-150", signals: ["治愈我", "陪着我"], traits: ["细腻敏感", "念旧"] },
+            { id: 12, name: "泡脚桶", category: "居家废虫乐", match: "适合养生朋克两手抓的人", tags: ["养生", "放松", "实用"], desc: "一边熬夜一边泡脚，当代青年的自我救赎", priceRange: "¥100-200", signals: ["治愈我", "陪着我"], traits: ["实用主义", "细腻敏感"] },
+            { id: 13, name: "智能音箱", category: "居家废虫乐", match: "适合懒得动又想有人陪聊的人", tags: ["科技", "陪伴", "智能"], desc: "喊一声就有回应，比男朋友还靠谱", priceRange: "¥100-200", signals: ["陪着我", "懂我奇奇怪怪"], traits: ["好奇心重", "大大咧咧"] },
+            { id: 14, name: "香薰蜡烛套装", category: "居家废虫乐", match: "适合睡前仪式感很强的人", tags: ["氛围", "香氛", "治愈"], desc: "点一支蜡烛，让整个房间变成疗愈空间", priceRange: "¥50-150", signals: ["治愈我", "浪漫主义"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 15, name: "懒人床头支架", category: "居家废虫乐", match: "适合躺床上看剧看到手酸的人", tags: ["实用", "懒人", "科技"], desc: "解放双手，躺着刷剧的终极解决方案", priceRange: "¥50-100", signals: ["懂我奇奇怪怪", "陪着我"], traits: ["实用主义", "好奇心重"] },
+            { id: 16, name: "足疗按摩器", category: "居家废虫乐", match: "适合每天走一万步以上的人", tags: ["健康", "放松", "实用"], desc: "在家享受专业足疗，省钱又省事", priceRange: "¥150-300", signals: ["治愈我", "陪着我"], traits: ["实用主义", "细腻敏感"] },
+            
+            // 手工作妖
+            { id: 17, name: "DIY皮具套装", category: "手工作妖", match: "适合说想做手工但从未动手的人", tags: ["手工", "创意", "专属"], desc: "亲手缝制一个钱包，让每次掏钱都想起你", priceRange: "¥100-200", signals: ["懂我奇奇怪怪", "陪着我"], traits: ["好奇心重", "浪漫主义"] },
+            { id: 18, name: "羊毛毡材料包", category: "手工作妖", match: "适合觉得可爱但手残的人", tags: ["手工", "可爱", "治愈"], desc: "戳一个属于TA的小动物，丑萌也是一种爱", priceRange: "¥50-100", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["细腻敏感", "好奇心重"] },
+            { id: 19, name: "手绘数字油画", category: "手工作妖", match: "适合想画画但不知道画什么的人", tags: ["艺术", "创意", "浪漫"], desc: "填色完成一幅专属画作，零基础也能成为画家", priceRange: "¥50-150", signals: ["浪漫主义", "陪着我"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 20, name: "手工香皂材料包", category: "手工作妖", match: "适合喜欢香味又怕添加剂的人", tags: ["手工", "实用", "天然"], desc: "自己做的香皂，每一块都是用心的味道", priceRange: "¥50-100", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["实用主义", "细腻敏感"] },
+            { id: 21, name: "定制情侣T恤", category: "手工作妖", match: "适合喜欢低调秀恩爱的人", tags: ["专属", "穿搭", "纪念"], desc: "穿上同款，让全世界知道你们是一对", priceRange: "¥100-200", signals: ["陪着我", "浪漫主义"], traits: ["浪漫主义", "大大咧咧"] },
+            { id: 22, name: "DIY相册套装", category: "手工作妖", match: "适合照片很多但从不整理的人", tags: ["纪念", "手工", "回忆"], desc: "把美好时光装订成册，翻一页就是一段回忆", priceRange: "¥50-150", signals: ["陪着我", "治愈我"], traits: ["念旧", "浪漫主义"] },
+            { id: 23, name: "手工编织材料包", category: "手工作妖", match: "适合想学新技能又怕半途而废的人", tags: ["手工", "技能", "专属"], desc: "织一条围巾，针脚里都是小心思", priceRange: "¥50-100", signals: ["陪着我", "治愈我"], traits: ["细腻敏感", "念旧"] },
+            { id: 24, name: "定制印章", category: "手工作妖", match: "适合文艺青年或者强迫症患者", tags: ["专属", "文艺", "实用"], desc: "盖在哪里，哪里就有了TA的印记", priceRange: "¥50-150", signals: ["懂我奇奇怪怪", "浪漫主义"], traits: ["细腻敏感", "好奇心重"] },
+            
+            // 远距粘人精
+            { id: 25, name: "长距离感应灯", category: "远距粘人精", match: "适合异地恋又怕孤独的人", tags: ["异地", "陪伴", "科技"], desc: "我想你的时候，你的灯也会亮起来", priceRange: "¥100-200", signals: ["陪着我", "懂我奇奇怪怪"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 26, name: "双人同步手链", category: "远距粘人精", match: "适合想要随时知道对方在干嘛的人", tags: ["异地", "科技", "陪伴"], desc: "触碰手链，对方的手链就会亮起", priceRange: "¥150-300", signals: ["陪着我", "浪漫主义"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 27, name: "同步观影会员", category: "远距粘人精", match: "适合异地还要一起追剧的人", tags: ["异地", "娱乐", "科技"], desc: "相隔千里也能同步追剧吐槽", priceRange: "¥50-100", signals: ["陪着我", "让我笑"], traits: ["好奇心重", "大大咧咧"] },
+            { id: 28, name: "异地专属相框", category: "远距粘人精", match: "适合每天看照片傻笑的人", tags: ["纪念", "异地", "专属"], desc: "可以把视频通话截图放进去的那种", priceRange: "¥50-150", signals: ["陪着我", "治愈我"], traits: ["念旧", "浪漫主义"] },
+            { id: 29, name: "双人在线游戏账号", category: "远距粘人精", match: "适合想一起玩游戏但找不到机会的人", tags: ["异地", "游戏", "互动"], desc: "在虚拟世界里约会见面", priceRange: "¥50-150", signals: ["陪着我", "点燃我"], traits: ["好奇心重", "大大咧咧"] },
+            { id: 30, name: "定制异地日历", category: "远距粘人精", match: "适合喜欢倒计时的异地恋人", tags: ["异地", "纪念", "专属"], desc: "标记下次见面，每一天都有盼头", priceRange: "¥50-100", signals: ["陪着我", "浪漫主义"], traits: ["念旧", "细腻敏感"] },
+            { id: 31, name: "同步听歌设备", category: "远距粘人精", match: "适合有共同歌单的人", tags: ["异地", "音乐", "科技"], desc: "同一首歌，两个人同时听", priceRange: "¥100-200", signals: ["陪着我", "治愈我"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 32, name: "可录音玩偶", category: "远距粘人精", match: "适合想听到对方声音的人", tags: ["异地", "陪伴", "可爱"], desc: "把想说的话录下来，抱着睡觉", priceRange: "¥50-150", signals: ["陪着我", "治愈我"], traits: ["细腻敏感", "念旧"] },
+            
+            // 吃货互换
+            { id: 33, name: "地方特产盲盒", category: "吃货互换", match: "适合什么都要尝一口的人", tags: ["美食", "惊喜", "尝鲜"], desc: "不知道里面是什么，开箱就是惊喜", priceRange: "¥50-150", signals: ["让我笑", "点燃我"], traits: ["好奇心重", "大大咧咧"] },
+            { id: 34, name: "DIY烘焙套装", category: "吃货互换", match: "适合说想学烘焙但从未动手的人", tags: ["美食", "手工", "互动"], desc: "一起做蛋糕，失败也是甜蜜的回忆", priceRange: "¥100-200", signals: ["陪着我", "治愈我"], traits: ["好奇心重", "细腻敏感"] },
+            { id: 35, name: "定制零食大礼包", category: "吃货互换", match: "适合零食柜永远填不满的人", tags: ["美食", "专属", "实用"], desc: "挑选TA最爱的零食，包装成礼物", priceRange: "¥100-200", signals: ["懂我奇奇怪怪", "陪着我"], traits: ["大大咧咧", "实用主义"] },
+            { id: 36, name: "精酿啤酒品鉴套装", category: "吃货互换", match: "适合微醺爱好者", tags: ["美食", "体验", "放松"], desc: "小酌怡情，一起品鉴不同的味道", priceRange: "¥150-300", signals: ["点燃我", "陪着我"], traits: ["好奇心重", "大大咧咧"] },
+            { id: 37, name: "咖啡豆订阅", category: "吃货互换", match: "适合咖啡因依赖者", tags: ["美食", "长期", "实用"], desc: "每个月都有新的咖啡豆送达", priceRange: "¥100-200", signals: ["治愈我", "陪着我"], traits: ["实用主义", "细腻敏感"] },
+            { id: 38, name: "水果季订阅", category: "吃货互换", match: "适合不爱吃水果但需要补充维生素的人", tags: ["健康", "长期", "实用"], desc: "应季水果送到家，健康不缺席", priceRange: "¥150-300", signals: ["治愈我", "陪着我"], traits: ["实用主义", "细腻敏感"] },
+            { id: 39, name: "火锅底料大礼包", category: "吃货互换", match: "适合冬天不想出门但又馋火锅的人", tags: ["美食", "居家", "实用"], desc: "在家涮火锅，想吃多久吃多久", priceRange: "¥50-150", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["大大咧咧", "实用主义"] },
+            { id: 40, name: "精致餐具套装", category: "吃货互换", match: "适合吃饭也要仪式感的人", tags: ["实用", "居家", "精致"], desc: "好看的餐具让外卖也变得精致起来", priceRange: "¥100-200", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["细腻敏感", "浪漫主义"] },
+            
+            // 潮玩解毒
+            { id: 41, name: "盲盒系列", category: "潮玩解毒", match: "适合开箱上瘾的人", tags: ["潮玩", "惊喜", "收藏"], desc: "拆开的瞬间就是快乐巅峰", priceRange: "¥50-150", signals: ["让我笑", "点燃我"], traits: ["好奇心重", "大大咧咧"] },
+            { id: 42, name: "乐高拼装套装", category: "潮玩解毒", match: "适合能坐下来专注三小时以上的人", tags: ["潮玩", "创意", "专注"], desc: "一起拼一个世界，拼完也舍不得拆", priceRange: "¥150-500", signals: ["陪着我", "治愈我"], traits: ["好奇心重", "细腻敏感"] },
+            { id: 43, name: "手办展示柜", category: "潮玩解毒", match: "适合手办太多无处安放的人", tags: ["收纳", "展示", "实用"], desc: "让心爱的手办有自己的家", priceRange: "¥100-200", signals: ["懂我奇奇怪怪", "陪着我"], traits: ["好奇心重", "细腻敏感"] },
+            { id: 44, name: "设计师公仔", category: "潮玩解毒", match: "适合审美在线的收藏者", tags: ["潮玩", "艺术", "收藏"], desc: "小众又特别，摆在那里就是艺术品", priceRange: "¥200-400", signals: ["懂我奇奇怪怪", "点燃我"], traits: ["好奇心重", "浪漫主义"] },
+            { id: 45, name: "扭蛋机存钱罐", category: "潮玩解毒", match: "适合想存钱又忍不住花钱的人", tags: ["潮玩", "实用", "创意"], desc: "存钱也能扭蛋，快乐加倍", priceRange: "¥100-200", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["好奇心重", "大大咧咧"] },
+            { id: 46, name: "限定版桌游", category: "潮玩解毒", match: "适合周末喜欢宅家的人", tags: ["游戏", "互动", "收藏"], desc: "一起玩桌游，输赢都是乐趣", priceRange: "¥150-300", signals: ["陪着我", "让我笑"], traits: ["好奇心重", "大大咧咧"] },
+            { id: 47, name: "模型喷绘套装", category: "潮玩解毒", match: "适合有艺术细胞的动手达人", tags: ["手工", "艺术", "专注"], desc: "亲手给模型上色，独一无二的创作", priceRange: "¥100-200", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["好奇心重", "细腻敏感"] },
+            { id: 48, name: "复古游戏机", category: "潮玩解毒", match: "适合怀旧游戏玩家", tags: ["游戏", "复古", "娱乐"], desc: "重温童年快乐，还是那个味儿", priceRange: "¥100-300", signals: ["点燃我", "治愈我"], traits: ["念旧", "好奇心重"] },
+            
+            // 书影音避难所
+            { id: 49, name: "年度阅读计划套装", category: "书影音避难所", match: "适合说要多读书但从未开始的人", tags: ["阅读", "成长", "长期"], desc: "挑选12本书，每月一本慢慢读", priceRange: "¥200-400", signals: ["陪着我", "治愈我"], traits: ["细腻敏感", "实用主义"] },
+            { id: 50, name: "限定版黑胶唱片", category: "书影音避难所", match: "适合音乐收藏癖", tags: ["音乐", "收藏", "艺术"], desc: "实体唱片的仪式感，播放前都要认真", priceRange: "¥150-300", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["浪漫主义", "念旧"] },
+            { id: 51, name: "电影票根收藏册", category: "书影音避难所", match: "适合看完电影要拍照发朋友圈的人", tags: ["纪念", "收藏", "文艺"], desc: "把看过的电影都保存下来", priceRange: "¥50-100", signals: ["陪着我", "治愈我"], traits: ["念旧", "浪漫主义"] },
+            { id: 52, name: "书店会员卡", category: "书影音避难所", match: "适合周末逛书店的人", tags: ["阅读", "长期", "实用"], desc: "可以免费喝咖啡看书的那种", priceRange: "¥100-200", signals: ["治愈我", "陪着我"], traits: ["细腻敏感", "实用主义"] },
+            { id: 53, name: "导演作品集套装", category: "书影音避难所", match: "适合有固定导演偏好的影迷", tags: ["影视", "收藏", "艺术"], desc: "一位导演的代表作合集，收藏级品质", priceRange: "¥150-300", signals: ["懂我奇奇怪怪", "陪着我"], traits: ["好奇心重", "细腻敏感"] },
+            { id: 54, name: "播客周边礼包", category: "书影音避难所", match: "适合有固定收听播客习惯的人", tags: ["音频", "收藏", "专属"], desc: "支持喜欢的播客，还能得到周边", priceRange: "¥50-150", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["好奇心重", "细腻敏感"] },
+            { id: 55, name: "有声书会员", category: "书影音避难所", match: "适合通勤时间长的人", tags: ["音频", "实用", "长期"], desc: "让通勤时间变成听书时间", priceRange: "¥50-150", signals: ["治愈我", "陪着我"], traits: ["实用主义", "细腻敏感"] },
+            { id: 56, name: "歌词本套装", category: "书影音避难所", match: "适合看到好歌词会截图的人", tags: ["音乐", "收藏", "文艺"], desc: "精选歌词合集，翻阅就是诗意", priceRange: "¥50-150", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["浪漫主义", "细腻敏感"] },
+            
+            // 穿搭小心机
+            { id: 57, name: "设计师袜子合集", category: "穿搭小心机", match: "适合宣称'没衣服穿'但衣柜炸开的人", tags: ["穿搭", "实用", "小心机"], desc: "袜子是性价比最高的时尚单品", priceRange: "¥50-150", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["大大咧咧", "好奇心重"] },
+            { id: 58, name: "定制丝巾", category: "穿搭小心机", match: "适合喜欢系丝巾但不太会搭配的人", tags: ["穿搭", "专属", "艺术"], desc: "一条丝巾十种系法，每天都不同", priceRange: "¥100-200", signals: ["浪漫主义", "懂我奇奇怪怪"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 59, name: "小众香水", category: "穿搭小心机", match: "适合对香味敏感且有独特品味的人", tags: ["香氛", "专属", "精致"], desc: "找到属于TA的独特味道", priceRange: "¥200-400", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["细腻敏感", "浪漫主义"] },
+            { id: 60, name: "复古墨镜", category: "穿搭小心机", match: "适合墨镜一戴谁都不爱的人", tags: ["穿搭", "时尚", "个性"], desc: "一副墨镜，气场全开", priceRange: "¥100-200", signals: ["点燃我", "懂我奇奇怪怪"], traits: ["大大咧咧", "好奇心重"] },
+            { id: 61, name: "手工皮带", category: "穿搭小心机", match: "适合注重细节的人", tags: ["穿搭", "手工", "实用"], desc: "一条好皮带，用很多年", priceRange: "¥150-300", signals: ["陪着我", "懂我奇奇怪怪"], traits: ["实用主义", "细腻敏感"] },
+            { id: 62, name: "潮牌帽子", category: "穿搭小心机", match: "适合不想洗头又要出门的人", tags: ["穿搭", "实用", "时尚"], desc: "帽子一戴，发型不管", priceRange: "¥100-200", signals: ["让我笑", "懂我奇奇怪怪"], traits: ["大大咧咧", "好奇心重"] },
+            { id: 63, name: "定制鞋带", category: "穿搭小心机", match: "适合细节控", tags: ["穿搭", "专属", "小心机"], desc: "换双鞋带就像换了双新鞋", priceRange: "¥50-100", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["细腻敏感", "好奇心重"] },
+            { id: 64, name: "设计师胸针", category: "穿搭小心机", match: "适合喜欢小配饰的人", tags: ["穿搭", "艺术", "精致"], desc: "一个小胸针，整套搭配的点睛之笔", priceRange: "¥50-150", signals: ["懂我奇奇怪怪", "浪漫主义"], traits: ["细腻敏感", "浪漫主义"] },
+            
+            // 香香怪
+            { id: 65, name: "小众香水小样套装", category: "香香怪", match: "适合选择困难症患者", tags: ["香氛", "尝试", "精致"], desc: "十种味道慢慢试，找到命定香", priceRange: "¥100-200", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["细腻敏感", "好奇心重"] },
+            { id: 66, name: "车载香薰", category: "香香怪", match: "适合有车且对气味敏感的人", tags: ["香氛", "实用", "氛围"], desc: "让每次出行都有好心情", priceRange: "¥50-150", signals: ["治愈我", "陪着我"], traits: ["细腻敏感", "实用主义"] },
+            { id: 67, name: "香氛礼盒套装", category: "香香怪", match: "适合喜欢仪式感的人", tags: ["香氛", "礼盒", "精致"], desc: "扩香器+精油，整个房间都是想要的味道", priceRange: "¥150-300", signals: ["治愈我", "浪漫主义"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 68, name: "天然精油套装", category: "香香怪", match: "适合对成分敏感的人", tags: ["香氛", "天然", "养生"], desc: "纯天然精油，一滴就是植物的灵魂", priceRange: "¥100-200", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["细腻敏感", "实用主义"] },
+            { id: 69, name: "衣物喷雾", category: "香香怪", match: "适合衣服刚洗完就想要香味的人", tags: ["香氛", "实用", "日常"], desc: "喷一喷，衣服带着喜欢的味道", priceRange: "¥50-100", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["细腻敏感", "大大咧咧"] },
+            { id: 70, name: "固体香膏", category: "香香怪", match: "适合随身携带香气的人", tags: ["香氛", "便携", "精致"], desc: "小盒子里装着心动的味道", priceRange: "¥50-150", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["细腻敏感", "浪漫主义"] },
+            { id: 71, name: "香薰蜡烛礼盒", category: "香香怪", match: "适合睡前仪式感很强的人", tags: ["香氛", "氛围", "治愈"], desc: "不同味道对应不同心情", priceRange: "¥150-300", signals: ["治愈我", "浪漫主义"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 72, name: "空间喷雾", category: "香香怪", match: "适合对环境气味敏感的人", tags: ["香氛", "实用", "日常"], desc: "随时随地改变环境的味道", priceRange: "¥50-150", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["细腻敏感", "大大咧咧"] },
+            
+            // 桌面动物园
+            { id: 73, name: "桌面绿植套装", category: "桌面动物园", match: "适合说想养植物但总是养死的人", tags: ["绿植", "治愈", "桌面"], desc: "选那些最好养的，新手也能养活", priceRange: "¥50-150", signals: ["治愈我", "陪着我"], traits: ["细腻敏感", "好奇心重"] },
+            { id: 74, name: "水培植物套装", category: "桌面动物园", match: "适合懒人养植物", tags: ["绿植", "简单", "桌面"], desc: "水培植物，一周换一次水就够了", priceRange: "¥50-100", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["实用主义", "大大咧咧"] },
+            { id: 75, name: "桌面收纳组合", category: "桌面动物园", match: "适合桌面永远乱糟糟的人", tags: ["收纳", "实用", "桌面"], desc: "把乱糟糟的桌面变成整整齐齐", priceRange: "¥50-150", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["实用主义", "细腻敏感"] },
+            { id: 76, name: "创意台灯", category: "桌面动物园", match: "适合晚上工作到很晚的人", tags: ["实用", "氛围", "桌面"], desc: "好看的台灯，让工作也有好心情", priceRange: "¥100-200", signals: ["治愈我", "陪着我"], traits: ["细腻敏感", "实用主义"] },
+            { id: 77, name: "桌面加湿器", category: "桌面动物园", match: "适合空调房里待太久的人", tags: ["实用", "健康", "桌面"], desc: "增加湿度，皮肤不干燥", priceRange: "¥50-150", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["细腻敏感", "实用主义"] },
+            { id: 78, name: "多肉植物套装", category: "桌面动物园", match: "适合喜欢可爱小东西的人", tags: ["绿植", "可爱", "桌面"], desc: "多肉好养又可爱，看着心情就好", priceRange: "¥50-100", signals: ["治愈我", "让我笑"], traits: ["细腻敏感", "好奇心重"] },
+            { id: 79, name: "桌面日历", category: "桌面动物园", match: "适合需要规划时间的人", tags: ["实用", "规划", "桌面"], desc: "好看的日历让每天的开始都有仪式感", priceRange: "¥50-100", signals: ["治愈我", "陪着我"], traits: ["实用主义", "细腻敏感"] },
+            { id: 80, name: "创意笔筒", category: "桌面动物园", match: "适合桌面有很多笔的人", tags: ["收纳", "创意", "桌面"], desc: "有趣的笔筒，让办公也变得有趣", priceRange: "¥50-100", signals: ["懂我奇奇怪怪", "让我笑"], traits: ["好奇心重", "大大咧咧"] },
+            
+            // 怪奇小破烂
+            { id: 81, name: "复古玩具收藏", category: "怪奇小破烂", match: "适合怀旧又童心未泯的人", tags: ["收藏", "复古", "有趣"], desc: "那些小时候玩的现在都变成收藏品了", priceRange: "¥50-200", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["念旧", "好奇心重"] },
+            { id: 82, name: "奇怪徽章套装", category: "怪奇小破烂", match: "适合喜欢收集小东西的人", tags: ["收藏", "个性", "有趣"], desc: "奇怪的徽章，展示奇怪的兴趣", priceRange: "¥50-100", signals: ["懂我奇奇怪怪", "让我笑"], traits: ["好奇心重", "大大咧咧"] },
+            { id: 83, name: "复古钥匙扣", category: "怪奇小破烂", match: "适合钥匙总是找不到的人", tags: ["实用", "复古", "有趣"], desc: "好看的钥匙扣让找钥匙也变得有趣", priceRange: "¥50-100", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["大大咧咧", "念旧"] },
+            { id: 84, name: "小众贴纸包", category: "怪奇小破烂", match: "适合笔记本上贴满贴纸的人", tags: ["装饰", "个性", "有趣"], desc: "奇怪的贴纸贴在奇怪的地方", priceRange: "¥50-100", signals: ["懂我奇奇怪怪", "让我笑"], traits: ["好奇心重", "细腻敏感"] },
+            { id: 85, name: "复古磁铁", category: "怪奇小破烂", match: "适合冰箱上总是空空的人", tags: ["装饰", "复古", "有趣"], desc: "好看的磁铁让冰箱也变得有趣", priceRange: "¥50-100", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["好奇心重", "念旧"] },
+            { id: 86, name: "奇怪文具套装", category: "怪奇小破烂", match: "适合文具控", tags: ["文具", "创意", "有趣"], desc: "奇奇怪怪的文具让人爱不释手", priceRange: "¥50-150", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["好奇心重", "细腻敏感"] },
+            { id: 87, name: "复古海报", category: "怪奇小破烂", match: "适合墙面空空的人", tags: ["装饰", "艺术", "复古"], desc: "一张海报改变一面墙的氛围", priceRange: "¥50-150", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["好奇心重", "浪漫主义"] },
+            { id: 88, name: "小众明信片套装", category: "怪奇小破烂", match: "适合喜欢写信或收藏的人", tags: ["收藏", "文艺", "有趣"], desc: "好看的明信片可以寄也可以收藏", priceRange: "¥50-100", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["念旧", "浪漫主义"] },
+            
+            // 一起变老
+            { id: 89, name: "定制相册书", category: "一起变老", match: "适合照片很多但从不整理的人", tags: ["纪念", "专属", "回忆"], desc: "把美好时光装订成册", priceRange: "¥100-300", signals: ["陪着我", "治愈我"], traits: ["念旧", "浪漫主义"] },
+            { id: 90, name: "时间胶囊", category: "一起变老", match: "适合喜欢仪式感的人", tags: ["纪念", "仪式感", "有趣"], desc: "写给未来的自己或对方", priceRange: "¥50-100", signals: ["陪着我", "浪漫主义"], traits: ["浪漫主义", "念旧"] },
+            { id: 91, name: "定制纪念日日历", category: "一起变老", match: "适合总是忘记重要日子的人", tags: ["纪念", "实用", "专属"], desc: "把所有重要的日子都标记下来", priceRange: "¥50-150", signals: ["陪着我", "浪漫主义"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 92, name: "情侣戒指", category: "一起变老", match: "适合想要更进一步的恋人", tags: ["专属", "纪念", "浪漫"], desc: "套在手指上的承诺", priceRange: "¥200-500", signals: ["陪着我", "浪漫主义"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 93, name: "定制情侣手链", category: "一起变老", match: "适合喜欢低调秀恩爱的人", tags: ["专属", "穿搭", "纪念"], desc: "低调的配饰，低调的爱", priceRange: "¥100-300", signals: ["陪着我", "浪漫主义"], traits: ["浪漫主义", "细腻敏感"] },
+            { id: 94, name: "情侣睡衣", category: "一起变老", match: "适合想一起宅家的人", tags: ["居家", "专属", "舒适"], desc: "同款睡衣，同款好梦", priceRange: "¥150-300", signals: ["陪着我", "治愈我"], traits: ["大大咧咧", "浪漫主义"] },
+            { id: 95, name: "纪念照片拼图", category: "一起变老", match: "适合想要一起完成一件事的人", tags: ["互动", "纪念", "创意"], desc: "一起拼出属于你们的回忆", priceRange: "¥100-200", signals: ["陪着我", "治愈我"], traits: ["念旧", "好奇心重"] },
+            { id: 96, name: "专属歌单CD", category: "一起变老", match: "适合喜欢听歌的人", tags: ["音乐", "专属", "纪念"], desc: "把你们的歌刻成CD永久保存", priceRange: "¥50-150", signals: ["陪着我", "浪漫主义"], traits: ["浪漫主义", "念旧"] },
+            
+            // 电子榨菜
+            { id: 97, name: "无线耳机", category: "电子榨菜", match: "适合总是被线缠绕的人", tags: ["科技", "实用", "音频"], desc: "摆脱线的束缚，音乐自由", priceRange: "¥150-400", signals: ["治愈我", "陪着我"], traits: ["实用主义", "好奇心重"] },
+            { id: 98, name: "平板支架", category: "电子榨菜", match: "适合追剧追到手酸的人", tags: ["科技", "实用", "居家"], desc: "解放双手的追剧神器", priceRange: "¥50-150", signals: ["懂我奇奇怪怪", "陪着我"], traits: ["实用主义", "大大咧咧"] },
+            { id: 99, name: "充电宝", category: "电子榨菜", match: "适合手机电量永远不够的人", tags: ["科技", "实用", "日常"], desc: "电量焦虑的终结者", priceRange: "¥50-150", signals: ["治愈我", "陪着我"], traits: ["实用主义", "大大咧咧"] },
+            { id: 100, name: "键盘鼠标套装", category: "电子榨菜", match: "适合经常用电脑的人", tags: ["科技", "实用", "办公"], desc: "好用的输入设备让工作更舒适", priceRange: "¥150-300", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["实用主义", "好奇心重"] },
+            { id: 101, name: "智能手表", category: "电子榨菜", match: "适合喜欢记录数据的人", tags: ["科技", "健康", "实用"], desc: "时间、运动、通知，手腕上都有", priceRange: "¥200-500", signals: ["治愈我", "陪着我"], traits: ["实用主义", "好奇心重"] },
+            { id: 102, name: "蓝牙音箱", category: "电子榨菜", match: "适合喜欢到处听音乐的人", tags: ["科技", "音频", "便携"], desc: "走到哪听到哪，音乐随身", priceRange: "¥100-300", signals: ["治愈我", "陪着我"], traits: ["大大咧咧", "好奇心重"] },
+            { id: 103, name: "屏幕挂灯", category: "电子榨菜", match: "适合晚上用电脑的人", tags: ["科技", "实用", "护眼"], desc: "照亮屏幕也照亮心情", priceRange: "¥100-200", signals: ["治愈我", "懂我奇奇怪怪"], traits: ["实用主义", "细腻敏感"] },
+            { id: 104, name: "手机支架", category: "电子榨菜", match: "适合边吃饭边看手机的人", tags: ["科技", "实用", "日常"], desc: "解放双手，好好吃饭", priceRange: "¥50-100", signals: ["懂我奇奇怪怪", "治愈我"], traits: ["实用主义", "大大咧咧"] }
+        ];
+
+        // ==================== Categories ====================
+        const categories = [
+            "上头体验", "居家废虫乐", "手工作妖", "远距粘人精", "吃货互换",
+            "潮玩解毒", "书影音避难所", "穿搭小心机", "香香怪",
+            "桌面动物园", "怪奇小破烂", "一起变老", "电子榨菜"
+        ];
+
+        // ==================== Filter Options ====================
+        const filterOptions = {
+            daily: ["宅家冠军", "户外野人", "打工皇帝", "社交牛逼症", "安静创作家"],
+            relation: ["刚上头期", "甜到粘牙", "异国有时差", "老夫老妻", "友达以上"],
+            signal: ["治愈我", "点燃我", "让我笑", "陪着我", "懂我奇奇怪怪"],
+            hobby: ["吃好喝好", "穿得好看", "玩游戏", "看剧看书", "搞手工", "研究玄学"],
+            time: ["立刻就要", "3天内", "一周来得及", "可以慢慢筹备"],
+            exclusive: ["现成好物", "能刻字印照片", "全手工大作"],
+            traits: ["细腻敏感", "大大咧咧", "浪漫主义", "实用主义", "好奇心重", "念旧", "社恐", "社牛"],
+            budget: ["¥0-100", "¥100-200", "¥200-300", "¥300-500"]
+        };
+
+        // ==================== Quiz Questions ====================
+        const quizQuestions = {
+            giver: [
+                { question: "如果周末下午TA突然消失，最可能在哪儿被找到？", options: ["床上睡觉", "咖啡馆发呆", "公园散步", "游戏里", "商场逛街"] },
+                { question: "最近聊天记录里，哪个词出现最多？", options: ["累", "想吃", "走啊", "笑死", "好烦", "想你"] },
+                { question: "用一种天气形容TA最近的心情？", options: ["多云转晴", "小雨", "大风", "持续晴天", "雾霾"] },
+                { question: "一起看的上一部影视作品是？", options: ["甜剧", "科幻", "纪录片", "恐怖片", "没时间看"] },
+                { question: "TA的手机相册最近存满了什么？", options: ["自拍", "风景", "食物截图", "备忘录", "猫/狗"] },
+                { question: "如果现在能拥有一个超能力，TA可能会选？", options: ["瞬间睡着", "吃不长胖", "读懂心思", "时间暂停", "瞬间移动"] },
+                { question: "用一个味道描述这段关系？", options: ["橘子汽水", "雨后草地", "面包房", "图书馆旧书", "海风"] }
+            ],
+            receiver: [
+                { question: "如果周末下午你突然消失，你最可能在哪儿被找到？", options: ["床上睡觉", "咖啡馆发呆", "公园散步", "游戏里", "商场逛街"] },
+                { question: "最近聊天记录里，哪个词你发得最多？", options: ["累", "想吃", "走啊", "笑死", "好烦", "想你"] },
+                { question: "用一种天气形容你最近的心情？", options: ["多云转晴", "小雨", "大风", "持续晴天", "雾霾"] },
+                { question: "你最近想看什么类型的影视作品？", options: ["甜剧", "科幻", "纪录片", "恐怖片", "没时间看"] },
+                { question: "你的手机相册最近存满了什么？", options: ["自拍", "风景", "食物截图", "备忘录", "猫/狗"] },
+                { question: "如果现在能拥有一个超能力，你会选？", options: ["瞬间睡着", "吃不长胖", "读懂心思", "时间暂停", "瞬间移动"] },
+                { question: "用一个味道描述你想要的关系？", options: ["橘子汽水", "雨后草地", "面包房", "图书馆旧书", "海风"] }
+            ]
+        };
+
+        // ==================== Telegram Messages ====================
+        const telegramMessages = [
+            "咕咕说：这个礼物藏着一个小小的惊喜，你发现了吗？",
+            "咕咕说：有时候最简单的礼物，藏着最深的用心。",
+            "咕咕说：选礼物的过程，也是一种心意的表达。",
+            "咕咕说：好的礼物不需要很贵，只需要很对。",
+            "咕咕说：每一次选择，都是一次心意的解码。",
+            "咕咕说：你接收到的不仅仅是礼物，还有一份心意。",
+            "咕咕说：让每一次送礼都像发电报一样，精准抵达。"
+        ];
+
+        // ==================== State ====================
+        let currentMode = 'giver';
+        let currentCategory = '全部';
+        let currentView = 'grid';
+        let selectedFilters = {
+            daily: null,
+            relation: null,
+            signal: null,
+            hobby: null,
+            time: null,
+            exclusive: null,
+            traits: [],
+            budget: null
+        };
+        let collection = JSON.parse(localStorage.getItem('giftCollection') || '[]');
+        let quizAnswers = [];
+        let currentQuizIndex = 0;
+
+        // ==================== DOM Elements ====================
+        const heroTitle = document.getElementById('heroTitle');
+        const heroSubtitle = document.getElementById('heroSubtitle');
+        const inspirationBtnText = document.getElementById('inspirationBtnText');
+        const inspirationBtn = document.getElementById('inspirationBtn');
+        const categoriesNav = document.getElementById('categoriesNav');
+        const giftGrid = document.getElementById('giftGrid');
+        const filterBtn = document.getElementById('filterBtn');
+        const filterPanel = document.getElementById('filterPanel');
+        const closeFilter = document.getElementById('closeFilter');
+        const panelOverlay = document.getElementById('panelOverlay');
+        const filterPanelTitle = document.getElementById('filterPanelTitle');
+        const filterResultCount = document.getElementById('filterResultCount');
+        const resetFilter = document.getElementById('resetFilter');
+        const applyFilter = document.getElementById('applyFilter');
+        const collectionPanel = document.getElementById('collectionPanel');
+        const closeCollection = document.getElementById('closeCollection');
+        const collectionList = document.getElementById('collectionList');
+        const clearCollection = document.getElementById('clearCollection');
+        const exportCollection = document.getElementById('exportCollection');
+        const quizModal = document.getElementById('quizModal');
+        const closeQuiz = document.getElementById('closeQuiz');
+        const quizTitle = document.getElementById('quizTitle');
+        const quizProgress = document.getElementById('quizProgress');
+        const quizQuestion = document.getElementById('quizQuestion');
+        const quizOptions = document.getElementById('quizOptions');
+        const resultCard = document.getElementById('resultCard');
+        const giftDetailModal = document.getElementById('giftDetailModal');
+        const closeGiftDetail = document.getElementById('closeGiftDetail');
+        const giftDetailContent = document.getElementById('giftDetailContent');
+        const pigeonBtn = document.getElementById('pigeonBtn');
+        const telegramOverlay = document.getElementById('telegramOverlay');
+        const telegramGift = document.getElementById('telegramGift');
+        const telegramNote = document.getElementById('telegramNote');
+        const toast = document.getElementById('toast');
+        const modeBtns = document.querySelectorAll('.mode-btn');
+        const viewBtns = document.querySelectorAll('.view-btn');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        // ==================== Initialize ====================
+        function init() {
+            renderCategories();
+            renderGifts();
+            renderFilterOptions();
+            updateModeUI();
+            bindEvents();
+        }
+
+        // ==================== Render Categories ====================
+        function renderCategories() {
+            categoriesNav.innerHTML = `
+                <button class="category-tag ${currentCategory === '全部' ? 'active' : ''}" data-category="全部">全部</button>
+                ${categories.map(cat => `
+                    <button class="category-tag ${currentCategory === cat ? 'active' : ''}" data-category="${cat}">${cat}</button>
+                `).join('')}
+            `;
+        }
+
+        // ==================== Render Gifts ====================
+        function renderGifts(gifts = null) {
+            const filteredGifts = gifts || getFilteredGifts();
+            
+            if (filteredGifts.length === 0) {
+                giftGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+                        <p>没有找到匹配的礼物，试试调整筛选条件？</p>
+                    </div>
+                `;
+                return;
+            }
+
+            giftGrid.innerHTML = filteredGifts.map(gift => `
+                <div class="gift-card" data-gift-id="${gift.id}">
+                    <div class="gift-header">
+                        <h3 class="gift-name">${gift.name}</h3>
+                        <button class="favorite-btn ${collection.some(c => c.id === gift.id) ? 'active' : ''}" data-gift-id="${gift.id}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="gift-match">${gift.match}</p>
+                    <div class="gift-tags">
+                        ${gift.tags.map(tag => `<span class="gift-tag">${tag}</span>`).join('')}
+                        <span class="gift-tag price">${gift.priceRange}</span>
+                    </div>
+                    <p class="gift-desc">${gift.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        // ==================== Filter Logic ====================
+        function getFilteredGifts() {
+            let filtered = [...giftData];
+            
+            if (currentCategory !== '全部') {
+                filtered = filtered.filter(g => g.category === currentCategory);
+            }
+            
+            if (selectedFilters.signal) {
+                filtered = filtered.filter(g => g.signals && g.signals.includes(selectedFilters.signal));
+            }
+            
+            if (selectedFilters.traits.length > 0) {
+                filtered = filtered.filter(g => 
+                    g.traits && selectedFilters.traits.some(t => g.traits.includes(t))
+                );
+            }
+            
+            if (selectedFilters.budget) {
+                const budgetMap = {
+                    '¥0-100': [0, 100],
+                    '¥100-200': [100, 200],
+                    '¥200-300': [200, 300],
+                    '¥300-500': [300, 500]
+                };
+                const [min, max] = budgetMap[selectedFilters.budget];
+                filtered = filtered.filter(g => {
+                    const price = parseInt(g.priceRange.replace(/[¥\-]/g, '').split('-')[0]);
+                    return price >= min && price <= max;
+                });
+            }
+            
+            return filtered;
+        }
+
+        // ==================== Render Filter Options ====================
+        function renderFilterOptions() {
+            const labels = [
+                { id: 'filterOptions1', options: filterOptions.daily, key: 'daily', multi: false },
+                { id: 'filterOptions2', options: filterOptions.relation, key: 'relation', multi: false },
+                { id: 'filterOptions3', options: filterOptions.signal, key: 'signal', multi: false },
+                { id: 'filterOptions4', options: filterOptions.hobby, key: 'hobby', multi: false },
+                { id: 'filterOptions5', options: filterOptions.time, key: 'time', multi: false },
+                { id: 'filterOptions6', options: filterOptions.exclusive, key: 'exclusive', multi: false },
+                { id: 'filterOptions7', options: filterOptions.traits, key: 'traits', multi: true },
+                { id: 'filterOptions8', options: filterOptions.budget, key: 'budget', multi: false }
+            ];
+
+            labels.forEach(({ id, options, key, multi }) => {
+                const container = document.getElementById(id);
+                container.innerHTML = options.map(opt => `
+                    <button class="filter-option ${
+                        multi 
+                            ? selectedFilters[key].includes(opt) ? 'active' : ''
+                            : selectedFilters[key] === opt ? 'active' : ''
+                    }" data-filter="${key}" data-value="${opt}">${opt}</button>
+                `).join('');
+            });
+
+            updateFilterResult();
+        }
+
+        // ==================== Update Filter Result ====================
+        function updateFilterResult() {
+            const filtered = getFilteredGifts();
+            filterResultCount.textContent = filtered.length;
+        }
+
+        // ==================== Mode Toggle ====================
+        function updateModeUI() {
+            if (currentMode === 'giver') {
+                heroTitle.textContent = '我好像偷听到了TA没说出口的期待';
+                heroSubtitle.textContent = '每一次灵感发电，都是一场心意的解码。让我帮你截获那个刚刚好的礼物。';
+                inspirationBtnText.textContent = '📡 为TA截获一个礼物灵感';
+                filterPanelTitle.textContent = '为TA找到对的礼物';
+                document.getElementById('filterLabel1').textContent = 'TA的日常状态';
+                document.getElementById('filterLabel3').textContent = '想传递的信号';
+                document.getElementById('filterLabel4').textContent = '最近的心头好';
+                document.getElementById('filterLabel7').textContent = 'TA的性格标签（可多选）';
+                quizTitle.textContent = '灵感发电中...';
+            } else {
+                heroTitle.textContent = '这次换我，把期待写成电码发给你';
+                heroSubtitle.textContent = '把想要的礼物悄悄告诉TA，让心意不再错过。';
+                inspirationBtnText.textContent = '📡 发射我的心愿信号';
+                filterPanelTitle.textContent = '找到我想要的礼物';
+                document.getElementById('filterLabel1').textContent = '我的日常状态';
+                document.getElementById('filterLabel3').textContent = '想被接收的信号';
+                document.getElementById('filterLabel4').textContent = '最近的心头好';
+                document.getElementById('filterLabel7').textContent = '我的性格标签（可多选）';
+                quizTitle.textContent = '心愿信号发射中...';
+            }
+        }
+
+        // ==================== Quiz Logic ====================
+        function startQuiz() {
+            currentQuizIndex = 0;
+            quizAnswers = [];
+            resultCard.style.display = 'none';
+            quizModal.classList.add('active');
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const questions = quizQuestions[currentMode];
+            const question = questions[currentQuizIndex];
+            
+            quizProgress.innerHTML = questions.map((_, i) => `
+                <div class="quiz-progress-dot ${i < currentQuizIndex ? 'completed' : ''} ${i === currentQuizIndex ? 'active' : ''}"></div>
+            `).join('');
+            
+            quizQuestion.textContent = question.question;
+            quizOptions.innerHTML = question.options.map(opt => `
+                <button class="quiz-option" data-answer="${opt}">${opt}</button>
+            `).join('');
+        }
+
+        function handleQuizAnswer(answer) {
+            quizAnswers.push(answer);
+            
+            if (currentQuizIndex < quizQuestions[currentMode].length - 1) {
+                currentQuizIndex++;
+                renderQuizQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            const filtered = getFilteredGifts();
+            const randomGift = filtered[Math.floor(Math.random() * filtered.length)] || giftData[Math.floor(Math.random() * giftData.length)];
+            
+            const giverMessages = [
+                `因为TA最近的状态和你们的关系，这个礼物会让TA感受到你的用心。`,
+                `根据TA的喜好和你们的互动模式，这个选择会让TA惊喜。`,
+                `这个礼物藏着你们的默契，TA一定会懂。`
+            ];
+            
+            const receiverMessages = [
+                `根据你的状态和喜好，这是最适合你的礼物选择。`,
+                `这个礼物会让你的TA更了解你。`,
+                `发射这个心愿，让TA知道你的期待。`
+            ];
+            
+            const telegramTexts = currentMode === 'giver' 
+                ? [`亲爱的，这个礼物是我对你的一点小心意。`, `送给你，因为你值得被好好对待。`, `希望这个小小的惊喜能让你的日子闪闪发光。`]
+                : [`我想要的其实很简单，就是这个。`, `如果收到这个，我会很开心。`, `这是我最近的小小心愿。`];
+            
+            quizProgress.innerHTML = '';
+            quizQuestion.style.display = 'none';
+            quizOptions.style.display = 'none';
+            resultCard.style.display = 'block';
+            
+            resultCard.innerHTML = `
+                <svg class="result-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/>
+                </svg>
+                <h3 class="result-name">${randomGift.name}</h3>
+                <p class="result-reason">${currentMode === 'giver' ? giverMessages[Math.floor(Math.random() * giverMessages.length)] : receiverMessages[Math.floor(Math.random() * receiverMessages.length)]}</p>
+                <div class="result-message">${telegramTexts[Math.floor(Math.random() * telegramTexts.length)]}</div>
+                <div class="result-actions">
+                    <button class="result-btn secondary" id="retryQuiz">重新截获</button>
+                    <button class="result-btn primary" id="addToCollection" data-gift-id="${randomGift.id}">加入存档</button>
+                </div>
+            `;
+            
+            document.getElementById('retryQuiz').addEventListener('click', () => {
+                startQuiz();
+            });
+            
+            document.getElementById('addToCollection').addEventListener('click', () => {
+                addToCollection(randomGift.id);
+                showToast('已加入电报存档');
+            });
+        }
+
+        // ==================== Collection ====================
+        function addToCollection(giftId) {
+            const gift = giftData.find(g => g.id === giftId);
+            if (gift && !collection.some(c => c.id === giftId)) {
+                collection.push({
+                    ...gift,
+                    note: '',
+                    status: currentMode === 'giver' ? '待发送' : '想要中',
+                    addedAt: Date.now()
+                });
+                localStorage.setItem('giftCollection', JSON.stringify(collection));
+                renderGifts();
+            }
+        }
+
+        function removeFromCollection(giftId) {
+            collection = collection.filter(c => c.id !== giftId);
+            localStorage.setItem('giftCollection', JSON.stringify(collection));
+            renderCollection();
+            renderGifts();
+        }
+
+        function renderCollection() {
+            if (collection.length === 0) {
+                collectionList.innerHTML = `
+                    <div class="collection-empty">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+                        </svg>
+                        <p>存档里还没有礼物</p>
+                        <p>去发现喜欢的礼物吧</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            collectionList.innerHTML = collection.map(item => `
+                <div class="collection-item" data-gift-id="${item.id}">
+                    <div class="collection-item-header">
+                        <span class="collection-item-name">${item.name}</span>
+                        <span class="collection-item-status">${item.status}</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">${item.match}</p>
+                    ${item.note ? `<div class="collection-item-note">${item.note}</div>` : ''}
+                    <div style="margin-top: 0.75rem; display: flex; gap: 0.5rem;">
+                        <button class="result-btn secondary" style="font-size: 0.75rem; padding: 0.375rem 0.75rem;" onclick="editNote(${item.id})">编辑笔记</button>
+                        <button class="result-btn secondary" style="font-size: 0.75rem; padding: 0.375rem 0.75rem;" onclick="toggleStatus(${item.id})">${item.status === '已发送' ? '标记未发送' : '标记已发送'}</button>
+                        <button class="result-btn secondary" style="font-size: 0.75rem; padding: 0.375rem 0.75rem;" onclick="removeFromCollection(${item.id})">移除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.editNote = function(giftId) {
+            const item = collection.find(c => c.id === giftId);
+            if (item) {
+                const note = prompt('编辑笔记：', item.note || '');
+                if (note !== null) {
+                    item.note = note;
+                    localStorage.setItem('giftCollection', JSON.stringify(collection));
+                    renderCollection();
+                }
+            }
+        };
+
+        window.toggleStatus = function(giftId) {
+            const item = collection.find(c => c.id === giftId);
+            if (item) {
+                item.status = item.status === '已发送' ? '待发送' : '已发送';
+                localStorage.setItem('giftCollection', JSON.stringify(collection));
+                renderCollection();
+            }
+        };
+
+        // ==================== Export ====================
+        function exportList() {
+            if (collection.length === 0) {
+                showToast('存档里还没有礼物');
+                return;
+            }
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const width = 400;
+            const lineHeight = 30;
+            const padding = 30;
+            const height = padding * 2 + collection.length * lineHeight + 60;
+            
+            canvas.width = width;
+            canvas.height = height;
+            
+            ctx.fillStyle = '#FDF8E8';
+            ctx.fillRect(0, 0, width, height);
+            
+            ctx.fillStyle = '#2C3E50';
+            ctx.font = '18px "Noto Serif SC", serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(currentMode === 'giver' ? '给TA的密码电报' : '我的心愿电波', width / 2, padding + 24);
+            
+            ctx.font = '14px "Noto Serif SC", serif';
+            ctx.textAlign = 'left';
+            
+            collection.forEach((item, i) => {
+                const y = padding + 60 + i * lineHeight;
+                ctx.fillStyle = '#2C3E50';
+                ctx.fillText(`${i + 1}. ${item.name}`, padding, y);
+                ctx.fillStyle = '#6B7D8A';
+                ctx.fillText(`   ${item.priceRange}`, padding + 30, y + 16);
+            });
+            
+            ctx.fillStyle = '#9CAF88';
+            ctx.font = '12px "Noto Serif SC", serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('咕咕电报局，传递心动的频率', width / 2, height - padding);
+            
+            const link = document.createElement('a');
+            link.download = currentMode === 'giver' ? '给TA的密码电报.png' : '我的心愿电波.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            showToast('清单已导出');
+        }
+
+        // ==================== Gift Detail ====================
+        function showGiftDetail(giftId) {
+            const gift = giftData.find(g => g.id === giftId);
+            if (!gift) return;
+            
+            giftDetailContent.innerHTML = `
+                <h2 class="gift-detail-name">${gift.name}</h2>
+                <p class="gift-detail-match">${gift.match}</p>
+                
+                <div class="gift-detail-section">
+                    <p class="gift-detail-label">标签</p>
+                    <div class="gift-tags">
+                        ${gift.tags.map(tag => `<span class="gift-tag">${tag}</span>`).join('')}
+                        <span class="gift-tag price">${gift.priceRange}</span>
+                    </div>
+                </div>
+                
+                <div class="gift-detail-section">
+                    <p class="gift-detail-label">介绍</p>
+                    <p class="gift-detail-text">${gift.desc}</p>
+                </div>
+                
+                <div class="similar-gifts">
+                    <p class="similar-gifts-title">相似灵感</p>
+                    <div class="similar-gifts-list">
+                        ${giftData.filter(g => g.category === gift.category && g.id !== gift.id).slice(0, 4).map(g => `
+                            <span class="similar-gift-tag" onclick="showGiftDetail(${g.id})">${g.name}</span>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: center;">
+                    <button class="result-btn ${collection.some(c => c.id === gift.id) ? 'secondary' : 'primary'}" onclick="addToCollection(${gift.id}); showToast('已加入存档');">${collection.some(c => c.id === gift.id) ? '已在存档中' : '加入存档'}</button>
+                </div>
+            `;
+            
+            giftDetailModal.classList.add('active');
+        }
+
+        // ==================== Pigeon Easter Egg ====================
+        function showPigeonMessage() {
+            const randomGift = giftData[Math.floor(Math.random() * giftData.length)];
+            const randomMessage = telegramMessages[Math.floor(Math.random() * telegramMessages.length)];
+            
+            telegramGift.textContent = randomGift.name;
+            telegramNote.textContent = randomMessage;
+            telegramOverlay.classList.add('active');
+            
+            setTimeout(() => {
+                telegramOverlay.classList.remove('active');
+            }, 3000);
+        }
+
+        // ==================== Toast ====================
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('active');
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 2000);
+        }
+
+        // ==================== Bind Events ====================
+        function bindEvents() {
+            // Mode toggle
+            modeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    modeBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentMode = btn.dataset.mode;
+                    updateModeUI();
+                });
+            });
+            
+            // View toggle
+            viewBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    viewBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentView = btn.dataset.view;
+                    giftGrid.classList.toggle('list-view', currentView === 'list');
+                });
+            });
+            
+            // Category selection
+            categoriesNav.addEventListener('click', (e) => {
+                if (e.target.classList.contains('category-tag')) {
+                    document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentCategory = e.target.dataset.category;
+                    renderGifts();
+                }
+            });
+            
+            // Gift card click
+            giftGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.gift-card');
+                const favBtn = e.target.closest('.favorite-btn');
+                
+                if (favBtn) {
+                    const giftId = parseInt(favBtn.dataset.giftId);
+                    if (collection.some(c => c.id === giftId)) {
+                        removeFromCollection(giftId);
+                        showToast('已从存档移除');
+                    } else {
+                        addToCollection(giftId);
+                        showToast('已加入电报存档');
+                    }
+                    favBtn.classList.toggle('active');
+                } else if (card) {
+                    showGiftDetail(parseInt(card.dataset.giftId));
+                }
+            });
+            
+            // Filter panel
+            filterBtn.addEventListener('click', () => {
+                filterPanel.classList.add('active');
+                panelOverlay.classList.add('active');
+            });
+            
+            closeFilter.addEventListener('click', () => {
+                filterPanel.classList.remove('active');
+                panelOverlay.classList.remove('active');
+            });
+            
+            // Filter options
+            document.querySelectorAll('.filter-options').forEach(container => {
+                container.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('filter-option')) {
+                        const key = e.target.dataset.filter;
+                        const value = e.target.dataset.value;
+                        
+                        if (key === 'traits') {
+                            if (selectedFilters.traits.includes(value)) {
+                                selectedFilters.traits = selectedFilters.traits.filter(t => t !== value);
+                                e.target.classList.remove('active');
+                            } else if (selectedFilters.traits.length < 3) {
+                                selectedFilters.traits.push(value);
+                                e.target.classList.add('active');
+                            }
+                        } else {
+                            container.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
+                            if (selectedFilters[key] === value) {
+                                selectedFilters[key] = null;
+                            } else {
+                                selectedFilters[key] = value;
+                                e.target.classList.add('active');
+                            }
+                        }
+                        
+                        updateFilterResult();
+                    }
+                });
+            });
+            
+            resetFilter.addEventListener('click', () => {
+                selectedFilters = {
+                    daily: null,
+                    relation: null,
+                    signal: null,
+                    hobby: null,
+                    time: null,
+                    exclusive: null,
+                    traits: [],
+                    budget: null
+                };
+                renderFilterOptions();
+            });
+            
+            applyFilter.addEventListener('click', () => {
+                renderGifts();
+                filterPanel.classList.remove('active');
+                panelOverlay.classList.remove('active');
+                showToast('筛选已应用');
+            });
+            
+            // Collection panel
+            document.querySelector('[data-nav="collection"]').addEventListener('click', () => {
+                renderCollection();
+                collectionPanel.classList.add('active');
+                panelOverlay.classList.add('active');
+            });
+            
+            closeCollection.addEventListener('click', () => {
+                collectionPanel.classList.remove('active');
+                panelOverlay.classList.remove('active');
+            });
+            
+            clearCollection.addEventListener('click', () => {
+                if (confirm('确定要清空存档吗？')) {
+                    collection = [];
+                    localStorage.setItem('giftCollection', JSON.stringify(collection));
+                    renderCollection();
+                    renderGifts();
+                    showToast('存档已清空');
+                }
+            });
+            
+            exportCollection.addEventListener('click', exportList);
+            
+            // Quiz
+            inspirationBtn.addEventListener('click', startQuiz);
+            closeQuiz.addEventListener('click', () => {
+                quizModal.classList.remove('active');
+                quizQuestion.style.display = 'block';
+                quizOptions.style.display = 'flex';
+            });
+            
+            quizOptions.addEventListener('click', (e) => {
+                if (e.target.classList.contains('quiz-option')) {
+                    handleQuizAnswer(e.target.dataset.answer);
+                }
+            });
+            
+            // Gift detail
+            closeGiftDetail.addEventListener('click', () => {
+                giftDetailModal.classList.remove('active');
+            });
+            
+            // Pigeon
+            pigeonBtn.addEventListener('click', showPigeonMessage);
+            
+            // Panel overlay
+            panelOverlay.addEventListener('click', () => {
+                filterPanel.classList.remove('active');
+                collectionPanel.classList.remove('active');
+                panelOverlay.classList.remove('active');
+            });
+            
+            // Bottom nav
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    navItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    if (item.dataset.nav === 'filter') {
+                        filterPanel.classList.add('active');
+                        panelOverlay.classList.add('active');
+                    }
+                });
+            });
+            
+            // Close modals on outside click
+            [quizModal, giftDetailModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        quizQuestion.style.display = 'block';
+                        quizOptions.style.display = 'flex';
+                    }
+                });
+            });
+        }
+
+        // ==================== Start ====================
+        init();
+    </script>
+</body>
+</html>
